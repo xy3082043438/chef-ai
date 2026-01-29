@@ -40,11 +40,6 @@ npm run preview
 - 默认开发代理：`/api` -> `http://localhost:8080`（见 `vite.config.js`）
 - 生产环境建议：用 Nginx/网关将 `/api` 反向代理到后端服务
 
-文档与设计文件：
-
-- 需求与设计说明：`AI+菜谱.md`
-- 接口文档：`OpenAPI.json`
-
 ## 相关仓库
 
 - 后端仓库：`https://github.com/xy3082043438/chef-ai-server`
