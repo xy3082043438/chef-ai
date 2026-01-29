@@ -3,9 +3,9 @@
     <div class="login-card">
       <div class="login-header">
         <img class="app-logo" src="/logo.jpg" alt="Chef AI" />
-        <p class="app-subtitle">智能菜谱助手</p>
+        <p class="app-subtitle">Chef AI</p>
       </div>
-      
+
       <el-tabs v-model="activeTab" class="login-tabs">
         <el-tab-pane label="登录" name="login">
           <el-form
@@ -23,7 +23,7 @@
                 size="large"
               />
             </el-form-item>
-            
+
             <el-form-item label="密码" prop="password">
               <el-input
                 v-model="loginForm.password"
@@ -34,7 +34,7 @@
                 show-password
               />
             </el-form-item>
-            
+
             <el-form-item>
               <el-button
                 type="primary"
@@ -48,7 +48,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        
+
         <el-tab-pane label="注册" name="register">
           <el-form
             ref="registerFormRef"
@@ -65,7 +65,7 @@
                 size="large"
               />
             </el-form-item>
-            
+
             <el-form-item label="邮箱" prop="email">
               <el-input
                 v-model="registerForm.email"
@@ -74,7 +74,7 @@
                 size="large"
               />
             </el-form-item>
-            
+
             <el-form-item label="密码" prop="password">
               <el-input
                 v-model="registerForm.password"
@@ -85,7 +85,7 @@
                 show-password
               />
             </el-form-item>
-            
+
             <el-form-item label="确认密码" prop="confirmPassword">
               <el-input
                 v-model="registerForm.confirmPassword"
@@ -96,7 +96,7 @@
                 show-password
               />
             </el-form-item>
-            
+
             <el-form-item>
               <el-button
                 type="primary"
@@ -119,7 +119,6 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
@@ -182,10 +181,10 @@ const registerRules = {
 
 const handleLogin = async () => {
   if (!loginFormRef.value) return
-  
+
   await loginFormRef.value.validate(async (valid) => {
     if (!valid) return
-    
+
     loading.value = true
     try {
       await userStore.login(loginForm.username, loginForm.password)
@@ -202,10 +201,10 @@ const handleLogin = async () => {
 
 const handleRegister = async () => {
   if (!registerFormRef.value) return
-  
+
   await registerFormRef.value.validate(async (valid) => {
     if (!valid) return
-    
+
     loading.value = true
     try {
       await userStore.register(
@@ -275,11 +274,4 @@ const handleRegister = async () => {
   width: 100%;
 }
 
-:deep(.el-tabs__item) {
-  font-size: 16px;
-}
-
-:deep(.el-form-item__label) {
-  font-weight: 500;
-}
 </style>
