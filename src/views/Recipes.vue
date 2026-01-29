@@ -7,7 +7,7 @@
 
     <el-card class="user-summary">
       <el-row :gutter="20" align="middle">
-        <el-col :span="16">
+        <el-col :xs="24" :sm="16" :md="16">
           <div class="summary-info">
             <div class="summary-item">
               <el-icon><Star /></el-icon>
@@ -19,8 +19,8 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="8" style="text-align: right;">
-          <el-button type="primary" size="large" @click="generateRecipes" :loading="generating">
+        <el-col :xs="24" :sm="8" :md="8" class="action-col">
+          <el-button type="primary" size="large" @click="generateRecipes" :loading="generating" class="generate-btn">
             <el-icon><MagicStick /></el-icon>
             生成推荐
           </el-button>
@@ -236,10 +236,6 @@ const viewRecipe = (menuId) => {
   font-size: 14px;
 }
 
-.summary-item .el-icon {
-  color: #409EFF;
-}
-
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -281,11 +277,6 @@ const viewRecipe = (menuId) => {
   overflow: hidden;
 }
 
-.recipe-image .el-image {
-  width: 100%;
-  height: 100%;
-}
-
 .image-placeholder {
   display: flex;
   align-items: center;
@@ -325,5 +316,128 @@ const viewRecipe = (menuId) => {
   font-weight: 600;
   color: #303133;
   margin: 0;
+}
+
+.action-col {
+  text-align: right;
+}
+
+.generate-btn {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .recipes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-summary {
+    margin-bottom: 20px;
+  }
+
+  .summary-info {
+    margin-bottom: 16px;
+  }
+
+  .summary-item {
+    font-size: 13px;
+  }
+
+  .action-col {
+    text-align: left;
+  }
+
+  .generate-btn {
+    width: 100%;
+  }
+
+  .recipes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .recipe-image {
+    height: 150px;
+  }
+
+  .recipe-info {
+    padding: 12px;
+  }
+
+  .recipe-name {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .history-title {
+    font-size: 18px;
+  }
+
+  .loading-container {
+    min-height: 200px;
+  }
+
+  .loading-icon {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-summary {
+    margin-bottom: 16px;
+  }
+
+  .summary-item {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .generate-btn {
+    font-size: 14px;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .recipe-card {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .recipe-image {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+  }
+
+  .recipe-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .recipe-name {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .recipe-ingredients {
+    gap: 4px;
+  }
+
+  .history-header {
+    margin-bottom: 12px;
+  }
+
+  .history-title {
+    font-size: 16px;
+  }
 }
 </style>

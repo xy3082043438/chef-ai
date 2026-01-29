@@ -4,12 +4,12 @@
       <el-icon><ArrowLeft /></el-icon>
       返回列表
     </el-button>
-    
+
     <div v-if="loading" class="loading-container">
       <el-icon class="loading-icon"><Loading /></el-icon>
       <p>加载菜谱详情...</p>
     </div>
-    
+
     <el-card v-else-if="recipe" class="recipe-card">
       <div class="recipe-header">
         <div class="recipe-image">
@@ -42,9 +42,9 @@
           </p>
         </div>
       </div>
-      
+
       <el-divider />
-      
+
       <div class="recipe-section">
         <h2 class="section-title">
           <el-icon><ShoppingCart /></el-icon>
@@ -55,7 +55,7 @@
           <el-table-column prop="quantity" label="用量" width="150" />
         </el-table>
       </div>
-      
+
       <div class="recipe-section">
         <h2 class="section-title">
           <el-icon><Dish /></el-icon>
@@ -70,7 +70,7 @@
           />
         </el-steps>
       </div>
-      
+
       <div v-if="recipe.recommendation" class="recipe-section">
         <h2 class="section-title">
           <el-icon><InfoFilled /></el-icon>
@@ -84,7 +84,7 @@
         />
       </div>
     </el-card>
-    
+
     <el-empty v-else description="菜谱不存在" />
   </div>
 </template>
@@ -120,8 +120,8 @@ const ingredientTableData = computed(() => {
     const ingredients = typeof recipe.value.ingredients === 'string'
       ? JSON.parse(recipe.value.ingredients)
       : recipe.value.ingredients
-    
-    return ingredients.map((name, index) => ({
+
+    return ingredients.map((name) => ({
       name,
       quantity: '适量'
     }))
@@ -198,11 +198,6 @@ const goBack = () => {
   flex-shrink: 0;
 }
 
-.recipe-image .el-image {
-  width: 100%;
-  height: 100%;
-}
-
 .image-placeholder {
   display: flex;
   flex-direction: column;
@@ -255,18 +250,128 @@ const goBack = () => {
   margin-bottom: 16px;
 }
 
-.section-title .el-icon {
-  color: #409EFF;
+@media (max-width: 1024px) {
+  .recipe-image {
+    width: 280px;
+    height: 200px;
+  }
+
+  .recipe-name {
+    font-size: 24px;
+  }
+
+  .recipe-section {
+    margin-bottom: 24px;
+  }
 }
 
 @media (max-width: 768px) {
+  .recipe-detail-container {
+    max-width: 100%;
+  }
+
+  .back-btn {
+    margin-bottom: 16px;
+  }
+
+  .loading-container {
+    min-height: 200px;
+  }
+
+  .loading-icon {
+    font-size: 36px;
+  }
+
   .recipe-header {
     flex-direction: column;
+    gap: 16px;
   }
-  
+
   .recipe-image {
     width: 100%;
     height: 200px;
   }
+
+  .recipe-name {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .recipe-tags {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .recipe-time {
+    font-size: 13px;
+  }
+
+  .recipe-section {
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .back-btn {
+    margin-bottom: 12px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .loading-container {
+    min-height: 180px;
+  }
+
+  .loading-icon {
+    font-size: 32px;
+  }
+
+  .recipe-header {
+    gap: 12px;
+  }
+
+  .recipe-image {
+    height: 180px;
+    border-radius: 6px;
+  }
+
+  .recipe-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .recipe-tags {
+    gap: 4px;
+  }
+
+  .recipe-time {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .recipe-section {
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    gap: 6px;
+  }
+
+  :deep(.el-table th) {
+    padding: 8px 0;
+  }
+
+  :deep(.el-table td) {
+    padding: 8px 0;
+  }
+
 }
 </style>

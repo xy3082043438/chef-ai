@@ -1,11 +1,11 @@
 <template>
   <div class="layout-container">
     <el-container class="layout-wrapper">
-      <el-aside width="220px" class="sidebar">
+      <el-aside :width="isMobile ? '0' : '220px'" class="sidebar hide-sm-down">
         <div class="sidebar-header">
           <img class="logo" src="/logo.jpg" alt="Chef AI" />
         </div>
-        
+
         <el-menu
           :default-active="activeMenu"
           class="sidebar-menu"
@@ -15,18 +15,18 @@
             <el-icon><HomeFilled /></el-icon>
             <span>首页</span>
           </el-menu-item>
-          
+
           <el-menu-item index="/personalization">
             <el-icon><Setting /></el-icon>
             <span>个性化设置</span>
           </el-menu-item>
-          
+
           <el-menu-item index="/recipes">
             <el-icon><Dish /></el-icon>
             <span>菜谱推荐</span>
           </el-menu-item>
         </el-menu>
-        
+
         <div class="sidebar-footer">
           <div class="user-info">
             <el-avatar :size="40" :src="userStore.user?.avatar">
@@ -43,7 +43,58 @@
           </el-button>
         </div>
       </el-aside>
-      
+
+      <div class="mobile-header hide-sm-up">
+        <el-button class="menu-btn" @click="drawerVisible = true" circle>
+          <el-icon><Menu /></el-icon>
+        </el-button>
+      </div>
+
+      <el-drawer
+        v-model="drawerVisible"
+        title="菜单"
+        direction="ltr"
+        size="280px"
+        class="mobile-drawer"
+      >
+        <el-menu
+          :default-active="activeMenu"
+          router
+          @select="drawerVisible = false"
+        >
+          <el-menu-item index="/">
+            <el-icon><HomeFilled /></el-icon>
+            <span>首页</span>
+          </el-menu-item>
+
+          <el-menu-item index="/personalization">
+            <el-icon><Setting /></el-icon>
+            <span>个性化设置</span>
+          </el-menu-item>
+
+          <el-menu-item index="/recipes">
+            <el-icon><Dish /></el-icon>
+            <span>菜谱推荐</span>
+          </el-menu-item>
+        </el-menu>
+
+        <div class="drawer-footer">
+          <div class="user-info">
+            <el-avatar :size="40" :src="userStore.user?.avatar">
+              {{ userStore.username?.charAt(0)?.toUpperCase() }}
+            </el-avatar>
+            <div class="user-detail">
+              <span class="username">{{ userStore.username }}</span>
+              <span class="user-email">{{ userStore.user?.email }}</span>
+            </div>
+          </div>
+          <el-button type="text" @click="handleLogout" class="logout-btn">
+            <el-icon><SwitchButton /></el-icon>
+            退出登录
+          </el-button>
+        </div>
+      </el-drawer>
+
       <el-main class="main-content">
         <router-view />
       </el-main>
@@ -52,17 +103,33 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
-import { HomeFilled, Setting, Dish, SwitchButton } from '@element-plus/icons-vue'
+import { HomeFilled, Setting, Dish, SwitchButton, Menu } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 
+const drawerVisible = ref(false)
+const isMobile = ref(false)
+
 const activeMenu = computed(() => route.path)
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < 768
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 const handleLogout = async () => {
   try {
@@ -75,11 +142,10 @@ const handleLogout = async () => {
         type: 'warning'
       }
     )
-    
+
     userStore.logout()
     router.push('/login')
   } catch {
-    // 用户取消
   }
 }
 </script>
@@ -164,5 +230,56 @@ const handleLogout = async () => {
   background: #f5f7fa;
   padding: 24px;
   overflow-y: auto;
+}
+
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #e4e7ed;
+  align-items: center;
+  padding: 0 12px;
+  z-index: 1000;
+}
+
+.menu-btn {
+  font-size: 20px;
+}
+
+:deep(.mobile-drawer) {
+  padding-bottom: 0;
+}
+
+.drawer-footer {
+  padding: 16px;
+  border-top: 1px solid #e4e7ed;
+  margin-top: auto;
+}
+
+.main-content {
+  background: #f5f7fa;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+
+  .main-content {
+    padding: 12px;
+    margin-top: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+  }
 }
 </style>

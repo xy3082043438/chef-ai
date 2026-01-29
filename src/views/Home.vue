@@ -6,42 +6,48 @@
         <p class="welcome-text">准备好开始今天的美食之旅了吗？</p>
       </div>
       <div class="welcome-image">
-        <img src="@/assets/cooking.svg" alt="Cooking" />
+        <el-icon class="welcome-icon"><Dish /></el-icon>
       </div>
     </div>
-    
+
     <el-row :gutter="20" class="action-cards">
       <el-col :xs="24" :sm="12" :md="8">
         <div class="action-card" @click="$router.push('/personalization')">
           <div class="card-icon personalization">
             <el-icon :size="32"><Setting /></el-icon>
           </div>
-          <h3>个性化设置</h3>
-          <p>设置您的口味偏好和食材库存</p>
+          <div class="card-text">
+            <h3>个性化设置</h3>
+            <p>设置您的口味偏好和食材库存</p>
+          </div>
         </div>
       </el-col>
-      
+
       <el-col :xs="24" :sm="12" :md="8">
         <div class="action-card" @click="$router.push('/recipes')">
           <div class="card-icon recipes">
             <el-icon :size="32"><Dish /></el-icon>
           </div>
-          <h3>菜谱推荐</h3>
-          <p>获取AI为您推荐的菜谱</p>
+          <div class="card-text">
+            <h3>菜谱推荐</h3>
+            <p>获取AI为您推荐的菜谱</p>
+          </div>
         </div>
       </el-col>
-      
+
       <el-col :xs="24" :sm="12" :md="8">
         <div class="action-card" @click="$router.push('/personalization')">
           <div class="card-icon inventory">
             <el-icon :size="32"><ShoppingCart /></el-icon>
           </div>
-          <h3>食材管理</h3>
-          <p>查看和管理您的食材库存</p>
+          <div class="card-text">
+            <h3>食材管理</h3>
+            <p>查看和管理您的食材库存</p>
+          </div>
         </div>
       </el-col>
     </el-row>
-    
+
     <div class="quick-summary">
       <el-card class="summary-card">
         <template #header>
@@ -49,9 +55,9 @@
             <span>您的个性化设置</span>
           </div>
         </template>
-        
+
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :xs="24" :sm="12">
             <div class="summary-item">
               <el-icon class="summary-icon"><Star /></el-icon>
               <div class="summary-info">
@@ -60,7 +66,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :xs="24" :sm="12">
             <div class="summary-item">
               <el-icon class="summary-icon"><ShoppingCart /></el-icon>
               <div class="summary-info">
@@ -70,7 +76,7 @@
             </div>
           </el-col>
         </el-row>
-        
+
         <el-button type="primary" text @click="$router.push('/personalization')">
           查看详情
           <el-icon class="el-icon--right"><ArrowRight /></el-icon>
@@ -123,9 +129,23 @@ onMounted(async () => {
   opacity: 0.9;
 }
 
-.welcome-image img {
+.welcome-image {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
   width: 120px;
   height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+
+.welcome-icon {
+  font-size: 64px;
+  color: #fff;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .action-cards {
@@ -187,6 +207,7 @@ onMounted(async () => {
 
 .summary-card {
   border-radius: 12px;
+  border: none;
 }
 
 .summary-item {
@@ -223,19 +244,153 @@ onMounted(async () => {
   align-items: center;
 }
 
+@media (max-width: 1024px) {
+  .welcome-card {
+    padding: 24px;
+  }
+
+  .welcome-title {
+    font-size: 24px;
+  }
+
+  .welcome-image img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
 @media (max-width: 768px) {
   .welcome-card {
-    flex-direction: column;
-    text-align: center;
+    padding: 20px;
+    /* Keeping row direction for better look */
+    align-items: center;
   }
-  
+
+  .welcome-content {
+    flex: 1;
+    padding-right: 15px;
+  }
+
+  .welcome-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+    word-break: break-word;
+  }
+
+  .welcome-text {
+    font-size: 13px;
+    margin: 0;
+  }
+
   .welcome-image {
-    margin-top: 24px;
-  }
-  
-  .welcome-image img {
+    margin-top: 0;
+    padding: 0;
     width: 80px;
     height: 80px;
+  }
+
+  .welcome-icon {
+    font-size: 40px;
+  }
+
+  .action-card {
+    padding: 20px;
+  }
+
+  .action-card h3 {
+    font-size: 16px;
+  }
+
+  .action-card p {
+    font-size: 13px;
+  }
+
+  .card-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .summary-value {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 16px;
+  }
+
+  .welcome-title {
+    font-size: 18px;
+  }
+
+  .welcome-text {
+    font-size: 12px;
+  }
+
+  .welcome-image {
+    padding: 0;
+    width: 60px;
+    height: 60px;
+  }
+
+  .welcome-icon {
+    font-size: 32px;
+  }
+
+  .action-card {
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .action-card h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+    margin-top: 0;
+  }
+
+  .card-text {
+    flex: 1;
+    min-width: 0; /*防止文本溢出*/
+  }
+
+  .action-card p {
+    font-size: 12px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 16px 0 0;
+    flex-shrink: 0;
+  }
+
+  .summary-card {
+    margin-top: 16px;
+  }
+
+  .summary-item {
+    padding: 8px 0;
+  }
+
+  .summary-icon {
+    font-size: 20px;
+  }
+
+  .summary-label {
+    font-size: 12px;
+  }
+
+  .summary-value {
+    font-size: 16px;
   }
 }
 </style>
