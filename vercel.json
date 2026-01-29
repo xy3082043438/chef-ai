@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://backend-service.com/api/:path*"
+      "destination": "http://www.u1384585.nyat.app:32003/api/:path*"
     }
   ]
 }
